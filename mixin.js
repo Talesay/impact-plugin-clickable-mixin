@@ -4,32 +4,32 @@ ig.module(
 ).defines(function () {
 	'use strict';
 	ig.MixinClickable = {
-		oldClicked: false,
-		clickStartedInside: false,
+		oldClick: false,
+		clickedInside: false,
 		clickName: 'click',
 		updateClickable: function () {
 			var clicked = ig.input.state(this.clickName);
-			if (!this.oldClicked && clicked && this.overClickable()) {
-				this.clickStartedInside = true;
+			if (!this.oldClicked && clicked && this.isMouseOver()) {
+				this.clickedInside = true;
 			}
-			if (this.clickStartedInside && this.overClickable()) {
-				if (clicked && !this.oldClicked) {
-					this.clickPressed();
+			if (this.clickedInside && this.overClickable()) {
+				if (clicked && !this.oldClick) {
+					this.pressed();
 				} else if (clicked) {
-					this.clickDown();
-				} else if (this.oldClicked) {
-					this.clickReleased();
+					this.down();
+				} else if (this.oldClick) {
+					this.released();
 				}
 			}
-			if (this.oldClicked && !clicked) {
-				this.clickStartedInside = false;
+			if (this.oldClick && !clicked) {
+				this.clickedInside = false;
 			}
 			this.oldClicked = clicked;
 		},
-		clickDown: function () {},
-		clickPressed: function () {},
-		clickReleased: function () {},
-		overClickable: function () {
+		down: function () {},
+		pressed: function () {},
+		released: function () {},
+		isMouseOver: function () {
 			return ig.input.mouse.x + ig.game.screen.x > this.pos.x && ig.input.mouse.x + ig.game.screen.x < this.pos.x + this.size.x && ig.input.mouse.y + ig.game.screen.y > this.pos.y && ig.input.mouse.y + ig.game.screen.y < this.pos.y + this.size.y;
 		}
 	};
